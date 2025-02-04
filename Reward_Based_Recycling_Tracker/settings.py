@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,16 +25,16 @@ load_dotenv()
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY',default='')
+SECRET_KEY = os.getenv('SECRET_KEY',default='')
 
 # Use environment variables for email and message content
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='')
-SENDGRID_API_KEY = config('SENDGRID_API_KEY', default='')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', default='')
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY', default='')
 
 # Email subject and message can also be placed here for flexibility
-EMAIL_SUBJECT = config('EMAIL_SUBJECT', default='Recycling Reminder')
+EMAIL_SUBJECT = os.getenv('EMAIL_SUBJECT', default='Recycling Reminder')
 
-EMAIL_MESSAGE = config('EMAIL_MESSAGE', default='''
+EMAIL_MESSAGE = os.getenv('EMAIL_MESSAGE', default='''
 Hi there! 🌱
 
 We hope this message finds you well. 😊
