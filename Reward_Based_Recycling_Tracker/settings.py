@@ -59,7 +59,7 @@ Thank you for being a champion of change! 💚
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["reward-based-recycling-backend-python-anusha2669452-yir05l8u.leapcell.dev"]
 
 # Application definition
 
