@@ -59,7 +59,7 @@ Thank you for being a champion of change! 💚
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["reward-based-recycling-backend-python-anusha2669452-yir05l8u.leapcell.dev"]
+ALLOWED_HOSTS = ["reward-based-recycling-backend-python-anusha2669452-yir05l8u.leapcell.dev","127.0.0.1",]
 
 # Application definition
 
@@ -71,13 +71,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'EmailSender',
+    'backend_services',
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
