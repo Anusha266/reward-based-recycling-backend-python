@@ -68,7 +68,9 @@ DJANGO_SETTINGS_MODULE=os.getenv('DJANGO_SETTINGS_MODULE')
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["reward-based-recycling-backend-python-anusha2669452-yir05l8u.leapcell.dev","127.0.0.1","https://reward-based-recycling-backend-python-1.onrender.com"]
+ALLOWED_HOSTS = ["reward-based-recycling-backend-python-anusha2669452-yir05l8u.leapcell.dev",
+                 "127.0.0.1",
+                 "reward-based-recycling-backend-python-1.onrender.com"]
 
 # Application definition
 
