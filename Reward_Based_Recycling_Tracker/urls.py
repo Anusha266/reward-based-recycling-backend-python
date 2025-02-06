@@ -21,4 +21,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('',homePage.as_view(),name='home'),
     path('api/', include('backend_services.urls')),
+    path('email/',include('EmailSender.urls'))
 ]
