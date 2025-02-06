@@ -17,7 +17,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 from dotenv import load_dotenv
 from urllib.parse import urlparse
-
+from celery.schedules import crontab
+from datetime import datetime
 load_dotenv()
 
 
@@ -56,10 +57,18 @@ P.S. If you ever need more information or have any questions, don't hesitate to 
 Thank you for being a champion of change! 💚
 ''')
 
-# SECURITY WARNING: don't run with debug turned on in production!
+EMAIL_SEND_DAYS_LIMIT = int(os.getenv('EMAIL_SEND_DAYS_LIMIT', default=7))  # Default to 7 days
+MAX_WORKERS=int(os.getenv('MAX_WORKERS'))
+
+start_date_str = os.getenv('START_DATE')  # Fetch from .env
+
+# Parse the string to a datetime object
+START_DATE = datetime.strptime(start_date_str, '%Y-%m-%d')
+DJANGO_SETTINGS_MODULE=os.getenv('DJANGO_SETTINGS_MODULE')
+
 DEBUG = True
 
-ALLOWED_HOSTS = ["reward-based-recycling-backend-python-anusha2669452-yir05l8u.leapcell.dev","127.0.0.1",]
+ALLOWED_HOSTS = ["reward-based-recycling-backend-python-anusha2669452-yir05l8u.leapcell.dev","127.0.0.1","https://reward-based-recycling-backend-python-1.onrender.com"]
 
 # Application definition
 
@@ -117,9 +126,6 @@ DATABASES = {
         'PASSWORD': tmpPostgres.password,
         'HOST': tmpPostgres.hostname,
         'PORT': 5432,
-        'OPTIONS': {
-            'sslmode': 'require',  # Ensures the connection uses SSL
-        },
     }
 }
 
@@ -165,5 +171,18 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# settings.py
 
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+# settings.py
+CELERY_TIMEZONE = 'Asia/Kolkata'
+CELERY_BEAT_SCHEDULE = {
+    'send-emails-everyday': {
+        'task': 'EmailSender.tasks.send_scheduled_emails',
+        'schedule': crontab(hour=0, minute=29),  
+    },
+    'send-emails-everynight': {
+        'task': 'EmailSender.tasks.send_scheduled_emails',
+        'schedule': crontab(hour=0, minute=30),  
+    },
+}
