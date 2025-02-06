@@ -66,7 +66,7 @@ start_date_str = os.getenv('START_DATE')  # Fetch from .env
 START_DATE = datetime.strptime(start_date_str, '%Y-%m-%d')
 DJANGO_SETTINGS_MODULE=os.getenv('DJANGO_SETTINGS_MODULE')
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["reward-based-recycling-backend-python-anusha2669452-yir05l8u.leapcell.dev",
                  "127.0.0.1",
@@ -174,7 +174,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")  # Uses local Redis if not set
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 # settings.py
 CELERY_TIMEZONE = 'Asia/Kolkata'
