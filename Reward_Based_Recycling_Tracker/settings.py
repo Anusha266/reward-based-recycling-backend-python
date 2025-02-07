@@ -58,7 +58,7 @@ Thank you for being a champion of change! 💚
 ''')
 
 EMAIL_SEND_DAYS_LIMIT = int(os.getenv('EMAIL_SEND_DAYS_LIMIT', default=7))  # Default to 7 days
-MAX_WORKERS=int(os.getenv('MAX_WORKERS'))
+MAX_WORKERS=int(os.getenv('MAX_WORKERS'),3)
 
 start_date_str = os.getenv('START_DATE')  # Fetch from .env
 
