@@ -8,7 +8,6 @@ import io
 
 class ImageProcessingView(APIView):
     def post(self, request):
-        print("hii")
         image_url = request.data.get('image_url')
         if not image_url:
             return Response({'error': 'image_url is required'}, status=status.HTTP_400_BAD_REQUEST)
