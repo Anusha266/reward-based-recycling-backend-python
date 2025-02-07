@@ -8,6 +8,7 @@ import io
 
 class ImageProcessingView(APIView):
     def post(self, request):
+        print("hii")
         image_url = request.data.get('image_url')
         if not image_url:
             return Response({'error': 'image_url is required'}, status=status.HTTP_400_BAD_REQUEST)
@@ -28,12 +29,16 @@ class ImageProcessingView(APIView):
         try:
             tags = exifread.process_file(io.BytesIO(image_content), details=False)
         except Exception as e:
-            return Response({'error': f'Failed to process EXIF data: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+            'image_hash': image_hash, 
+        })
         
         # Extract EXIF DateTimeOriginal
         datetime_tag = tags.get('EXIF DateTimeOriginal')
         if not datetime_tag:
-            return Response({'error': 'EXIF DateTimeOriginal not found'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+            'image_hash': image_hash
+        },status=status.HTTP_200_OK)
         
         try:
             datetime_str = str(datetime_tag)
@@ -43,7 +48,10 @@ class ImageProcessingView(APIView):
             formatted_date = date_part.replace(':', '-', 2)
             exif_timestamp = f"{formatted_date}T{time_part}Z"
         except Exception as e:
-            return Response({'error': f'Invalid DateTimeOriginal format: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+            'image_hash': image_hash
+        },status=status.HTTP_200_OK)
+        
         
         # Extract GPS coordinates
         gps_latitude = tags.get('GPS GPSLatitude')
@@ -52,13 +60,19 @@ class ImageProcessingView(APIView):
         gps_longitude_ref = tags.get('GPS GPSLongitudeRef')
         
         if not all([gps_latitude, gps_latitude_ref, gps_longitude, gps_longitude_ref]):
-            return Response({'error': 'Incomplete GPS data'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+            'image_hash': image_hash
+        },status=status.HTTP_200_OK)
+        
         
         try:
             lat = self._convert_gps_to_decimal(gps_latitude, gps_latitude_ref)
             lon = self._convert_gps_to_decimal(gps_longitude, gps_longitude_ref)
         except Exception as e:
-            return Response({'error': f'Invalid GPS data: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+            'image_hash': image_hash
+        },status=status.HTTP_200_OK)
+        
         
         exif_gps = f"{lat:.4f},{lon:.4f}"
         
@@ -66,7 +80,7 @@ class ImageProcessingView(APIView):
             'image_hash': image_hash,
             'exif_timestamp': exif_timestamp,
             'exif_gps_location': exif_gps
-        })
+        },status=status.HTTP_200_OK)
     
     def _convert_gps_to_decimal(self, coord, ref):
         # Convert each part from Rational to float
