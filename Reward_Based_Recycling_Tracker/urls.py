@@ -17,9 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from .views import homePage
+import os 
+from dotenv import load_dotenv
+load_dotenv()
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('',homePage.as_view(),name='home'),
     path('api/', include('backend_services.urls')),
-    path('email/',include('EmailSender.urls'))
+    path(f'{os.getenv("EMAIL")}',include('EmailSender.urls'))
 ]
