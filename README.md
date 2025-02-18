@@ -5,7 +5,7 @@ Waste management and recycling remain major global challenges. Many individuals 
 
 Our goal is to build a transparent, fraud-proof, and scalable recycling system that not only rewards users but also helps NGOs and local businesses leverage recycling data for social good.
 
-By integrating AI-driven image verification, GPS-based location tracking, and device fingerprinting, we ensure that users contribute authentically and that the system delivers meaningful impact.
+By integrating image verification, GPS-based location tracking, and device fingerprinting, we ensure that users contribute authentically and that the system delivers meaningful impact.
 
 Checkout more about project : <https://devpost.com/software/recycle-tracker>
 ## Project Details
